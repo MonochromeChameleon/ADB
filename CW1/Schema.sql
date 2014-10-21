@@ -36,13 +36,15 @@ CREATE TABLE booking (
 	client_name varchar(150) not null,
 	client_phone_number varchar(20) not null,
 	pickup_location text not null,
-	pickup_time datetime not null default CURRENT_TIMESTAMP
+	pickup_time timestamp not null default CURRENT_TIMESTAMP,
+	recurrence int null
 );
 
 -- FK driver_id references employee
--- Validation constraing - driver_id must not reference an operator
+-- Validation constraint - driver_id must not reference an operator
 -- FK client_id references client
 -- Trigger when client_id is not null, client_name/phone_number populates from client table
+-- Validation constraint: recurrence must be null unless client_id is not null
 
 CREATE TABLE payment (
 	booking_id int not null,
@@ -50,5 +52,12 @@ CREATE TABLE payment (
 );
 
 -- Validation: account only permitted when booking has a client_id
+-- Trigger: on creation, if booking has a not-null recurrence, create a new booking for the next instance
 
+CREATE TABLE shift (
+	employee_id int not null,
+	start_time timestamp not null,
+	end_time timestamp not null
+);
 
+-- FK employee_id references employee(id)
