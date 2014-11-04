@@ -176,13 +176,9 @@ END;
 /
 
 
-
-
-
-
-
--- Trigger: validate employee id here as we can't use a foreign key to a view
--- TODO: I mean this one obviously wasn't going to work if the previous two don't.
+-- Validate that we are putting a valid employee on shift (i.e. one who is 
+-- currently employed) and, where appropriate, that they have been allocated a
+-- roadworthy car
 CREATE OR REPLACE TRIGGER trg_emp_shift_fk
 BEFORE INSERT ON shift
 FOR EACH ROW
@@ -208,7 +204,7 @@ BEGIN
     -- employees view for validation.
     IF (id_check IS NULL) THEN
         RAISE invalid_employee;
-    ELSIF (car_status_check <> 'roadworthy') THEN
+    ELSIF (car_status_check <> 'roadworthy' and :new.car_registration IS NOT NULL) THEN
         RAISE car_not_roadworthy;
     END IF;
 END;
