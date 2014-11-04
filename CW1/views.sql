@@ -1,8 +1,8 @@
 -- Hybrid view of all current/future employees.
 CREATE VIEW employee AS
-SELECT id, name, address, phone_number, start_date, 'driver' as job_type FROM driver WHERE end_date IS NULL OR end_date > SYSDATE
+SELECT id, name, address, phone_number, start_date, end_date, 'driver' as job_type FROM driver WHERE end_date IS NULL OR end_date > SYSDATE
 UNION ALL
-SELECT id, name, address, phone_number, start_date, 'operator' as job_type FROM operator WHERE end_date IS NULL OR end_date > SYSDATE
+SELECT id, name, address, phone_number, start_date, end_date, 'operator' as job_type FROM operator WHERE end_date IS NULL OR end_date > SYSDATE
 ORDER BY id ASC;
 
 
