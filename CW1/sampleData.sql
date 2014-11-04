@@ -1,9 +1,7 @@
-INSERT ALL 
-  INTO operator (name, address, phone_number) VALUES ('James Jameson', '123 Road Street, London, N1 1NN', '0207123456')
-  INTO operator (name, address, phone_number) VALUES ('Robert Robertson', 'Flat 1, Flat Street Apartments, Flat Street, London, E6 6EE', '07777777777')
-  INTO operator (name, address, phone_number) VALUES ('Michael Michaels', 'The bungalow, Lane street, London, SW18 18WS', '+44208999999')
-  INTO operator (name, address, phone_number) VALUES ('Andy Andrews', 'Our house, In the middle of our street', '+39728739992')
-SELECT 1 FROM dual;
+INSERT INTO operator (name, address, phone_number) VALUES ('James Jameson', '123 Road Street, London, N1 1NN', '0207123456');
+INSERT INTO operator (name, address, phone_number) VALUES ('Robert Robertson', 'Flat 1, Flat Street Apartments, Flat Street, London, E6 6EE', '07777777777');
+INSERT INTO operator (name, address, phone_number) VALUES ('Michael Michaels', 'The bungalow, Lane street, London, SW18 18WS', '+44208999999');
+INSERT INTO operator (name, address, phone_number) VALUES ('Andy Andrews', 'Our house, In the middle of our street', '+39728739992');
 
 INSERT ALL
   INTO driver (name, address, phone_number) VALUES ('Bilbo Baggins', 'Bag End, Hobbiton, Middle Earth', '+897838792874')

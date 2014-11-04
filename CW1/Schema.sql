@@ -122,7 +122,6 @@ CREATE TABLE booking_details (
     dropoff_location NCLOB NOT NULL,
     price int NOT NULL, -- price is in pence to avoid floating point maths
     payment_method VARCHAR2(7) NOT NULL,
-    recurrence int NULL,
     CONSTRAINT chk_payment_method CHECK (payment_method IN ('account', 'cash', 'card')),
     CONSTRAINT fk_driver_id FOREIGN KEY (driver_id) REFERENCES driver (id),
     CONSTRAINT fk_account_number FOREIGN KEY (account_number) REFERENCES client (account_number)
@@ -158,17 +157,6 @@ CREATE TABLE payment (
     notes NCLOB,
     payment_date DATE NOT NULL
 );
-
-
-
--- Queries
--- > Create booking for non-client
--- > Create booking for client
--- > Get today's bookings for driver
--- > Get drivers on shift for given date/time
--- > Get operators on shift for given date/time
--- > Take payment
-
 
 
 
