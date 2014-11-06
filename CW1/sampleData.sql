@@ -43,3 +43,17 @@ INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (
 INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (9, CURRENT_TIMESTAMP + INTERVAL '20' HOUR, CURRENT_TIMESTAMP + INTERVAL '28' HOUR, 'BAT 1');
 INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (10, CURRENT_TIMESTAMP + INTERVAL '22' HOUR, CURRENT_TIMESTAMP + INTERVAL '20' HOUR, 'SUPES');
 
+
+INSERT INTO client (name, phone_number, client_type) VALUES ('Ted Bundy', '07654321098', 'corporate');
+INSERT INTO client (name, phone_number, client_type) VALUES ('Dennis Rader', '0202020202', 'corporate');
+INSERT INTO client (name, phone_number, client_type) VALUES ('Gary Ridgway', '01234567890', 'corporate');
+INSERT INTO client (name, phone_number, client_type) VALUES ('David Berkowitz', '07421763187', 'private');
+
+INSERT INTO recurring_booking (client_account, pickup_location, dropoff_location, next_occurrence, price, recurrence, notes)
+    VALUES (182356, 'British Library', 'King''s Cross Station', CURRENT_TIMESTAMP + INTERVAL '7' DAY, 500, 7, 'weekly on Fridays');
+
+INSERT INTO booking_details (client_name, client_phone_number, pickup_location, pickup_time, dropoff_location, price, payment_method, driver_id)
+    VALUES ('Tom', '02498379237', 'Somewhere over the rainbow', CURRENT_TIMESTAMP + INTERVAL '5' HOUR, 'Way up high', 2000, 'cash', 7);
+
+INSERT INTO booking_details (client_name, client_phone_number, pickup_location, pickup_time, dropoff_location, price, payment_method, driver_id)
+    VALUES ('Jerry', '02498379237', 'Never never land', CURRENT_TIMESTAMP + INTERVAL '1' HOUR, 'Hyde park', 1000, 'cash', 5);

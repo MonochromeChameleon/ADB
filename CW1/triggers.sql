@@ -219,3 +219,25 @@ BEGIN
     END IF;
 END;
 /
+
+CREATE OR REPLACE TRIGGER trg_booking_driver_shift
+BEFORE INSERT OR UPDATE ON booking_details
+FOR EACH ROW
+DECLARE
+    shift_time_check TIMESTAMP;
+    driver_not_on_shift EXCEPTION;
+BEGIN
+    IF (:new.driver_id IS NOT NULL) THEN
+        SELECT start_time
+        INTO shift_time_check
+        FROM shift
+        WHERE employee_id = :new.driver_id
+        AND start_time <= :new.pickup_time
+        AND end_time >= :new.pickup_time;
+
+        IF (shift_time_check IS NULL) THEN
+            RAISE driver_not_on_shift;
+        END IF;
+    END IF;
+END;
+/

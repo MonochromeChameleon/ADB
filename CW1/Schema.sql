@@ -94,7 +94,7 @@ CREATE TABLE recurring_booking (
     client_account int NOT NULL,
     pickup_location NCLOB NOT NULL,
     dropoff_location NCLOB NOT NULL,
-    next_occurence TIMESTAMP NOT NULL,
+    next_occurrence TIMESTAMP NOT NULL,
     price int NOT NULL,
     recurrence int NOT NULL,
     notes NCLOB,
@@ -113,10 +113,10 @@ CREATE TABLE recurring_booking (
 
 CREATE TABLE booking_details (
     id int NOT NULL primary key,
-    driver_id int NOT NULL,
+    driver_id int,
     account_number int NULL,
-    client_name VARCHAR2(150) NOT NULL,
-    client_phone_number VARCHAR2(20) NOT NULL,
+    client_name VARCHAR2(150) NULL,
+    client_phone_number VARCHAR2(20) NULL,
     pickup_location NCLOB NOT NULL,
     pickup_time TIMESTAMP NOT NULL,
     dropoff_location NCLOB NOT NULL,

@@ -12,21 +12,29 @@ ORDER BY id ASC;
 CREATE VIEW booking AS
 SELECT b.id, COALESCE(b.client_name, c.name) client_name, COALESCE(b.client_phone_number, c.phone_number) client_phone_number, pickup_location, pickup_time, d.name driver_name, d.phone_number, s.car_registration, price, payment_method
 FROM booking_details b
-JOIN client c
+LEFT JOIN client c
 ON b.account_number = c.account_number
-JOIN driver d
+LEFT JOIN driver d
 ON b.driver_id = d.id
-JOIN shift s
+LEFT JOIN shift s
 ON s.employee_id = d.id
-WHERE pickup_time > SYSDATE
 AND s.start_time <= b.pickup_time
 AND s.end_time >= b.pickup_time
 ORDER BY pickup_time ASC;
 
 
+SELECT b.id, COALESCE(b.client_name, c.name) client_name, pickup_location, d.name driver_name
+FROM booking_details b
+LEFT JOIN client c
+ON b.account_number = c.account_number
+LEFT JOIN driver d
+ON b.driver_id = d.id
+LEFT JOIN shift s
+ON s.employee_id = d.id
+AND s.start_time <= b.pickup_time
+AND s.end_time >= b.pickup_time
 
-
-
+-- Drivers on shift right now
 CREATE VIEW drivers_on_shift AS
 SELECT d.name, d.phone_number, car_registration, end_time
 FROM shift s
@@ -35,6 +43,7 @@ ON s.employee_id = d.id
 WHERE start_time <= CURRENT_TIMESTAMP
 AND end_time > CURRENT_TIMESTAMP;
 
+-- Operators on shift right now
 CREATE VIEW operators_on_shift AS
 SELECT o.name, o.phone_number, end_time
 FROM shift s
