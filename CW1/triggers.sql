@@ -154,8 +154,7 @@ BEGIN
     INTO operator_count
     FROM operator
     -- Check whether dates overlap
-    WHERE (start_date <= :new.start_date AND end_date >= :new.start_date)
-    OR (end_date >= :new.end_date AND start_date <= :new.end_date);
+    WHERE (start_date <= :new.start_date AND (end_date IS NULL OR end_date >= :new.start_date));
 
     IF (operator_count > 8) THEN
         RAISE too_many_operators;
@@ -185,28 +184,38 @@ FOR EACH ROW
 DECLARE
     id_check int;
     invalid_employee EXCEPTION;
-    car_status_check VARCHAR2(15);
-    car_not_roadworthy EXCEPTION;
 BEGIN
     SELECT id
     INTO id_check
     FROM employee
     WHERE id = :new.employee_id
     AND start_date <= :new.start_time
-    AND end_date >= :new.end_time;
-
-    SELECT car_status
-    INTO car_status_check
-    FROM car
-    WHERE registration = :new.car_registration;
+    AND (end_date IS NULL OR end_date >= :new.end_time);
 
     -- Assume that we are creating shifts in the future, so we can use our
     -- employees view for validation.
     IF (id_check IS NULL) THEN
         RAISE invalid_employee;
-    ELSIF (car_status_check <> 'roadworthy' and :new.car_registration IS NOT NULL) THEN
-        RAISE car_not_roadworthy;
     END IF;
 END;
 /
 
+CREATE OR REPLACE TRIGGER trg_drv_shift_roadworthy
+BEFORE INSERT ON shift
+FOR EACH ROW
+DECLARE
+    car_status_check VARCHAR2(15);
+    car_not_roadworthy EXCEPTION;
+BEGIN
+    IF (:new.car_registration IS NOT NULL) THEN
+        SELECT car_status
+        INTO car_status_check
+        FROM car
+        WHERE registration = :new.car_registration;
+
+        IF (car_status_check <> 'roadworthy') THEN
+            RAISE car_not_roadworthy;
+        END IF;
+    END IF;
+END;
+/

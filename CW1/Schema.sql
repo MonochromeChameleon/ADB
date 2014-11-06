@@ -158,5 +158,3 @@ CREATE TABLE payment (
     payment_date DATE NOT NULL
 );
 
-
-
