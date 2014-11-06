@@ -37,7 +37,7 @@ INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (
 INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (7, CURRENT_TIMESTAMP + INTERVAL '16' HOUR, CURRENT_TIMESTAMP + INTERVAL '24' HOUR, 'AB14 ABC');
 INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (8, CURRENT_TIMESTAMP + INTERVAL '18' HOUR, CURRENT_TIMESTAMP + INTERVAL '26' HOUR, 'RRRRRRRR');
 INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (9, CURRENT_TIMESTAMP + INTERVAL '20' HOUR, CURRENT_TIMESTAMP + INTERVAL '28' HOUR, 'BAT 1');
-INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (10, CURRENT_TIMESTAMP + INTERVAL '22' HOUR, CURRENT_TIMESTAMP + INTERVAL '20' HOUR, 'SUPES');
+INSERT INTO shift (employee_id, start_time, end_time, car_registration) VALUES (10, CURRENT_TIMESTAMP + INTERVAL '22' HOUR, CURRENT_TIMESTAMP + INTERVAL '30' HOUR, 'SUPES');
 
 
 INSERT INTO client (name, phone_number, client_type) VALUES ('Ted Bundy', '07654321098', 'corporate');
@@ -53,3 +53,4 @@ INSERT INTO booking_details (client_name, client_phone_number, pickup_location, 
 
 INSERT INTO booking_details (client_name, client_phone_number, pickup_location, pickup_time, dropoff_location, price, payment_method, driver_id)
     VALUES ('Jerry', '02498379237', 'Never never land', CURRENT_TIMESTAMP + INTERVAL '1' HOUR, 'Hyde park', 1000, 'cash', 5);
+

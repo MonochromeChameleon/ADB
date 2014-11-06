@@ -48,3 +48,57 @@ JOIN operator o
 ON s.employee_id = o.id
 WHERE start_time <= CURRENT_TIMESTAMP + INTERVAL '4' HOUR
 AND end_time > CURRENT_TIMESTAMP + INTERVAL '4' HOUR;
+
+-- > Get takings per driver over given date range
+
+SELECT d.name, SUM(price)
+FROM booking_details b
+JOIN driver d
+ON b.driver_id = d.id
+WHERE CAST(pickup_time AS DATE) >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
+AND CAST(pickup_time AS DATE) <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
+GROUP BY d.name;
+
+-- Same as above, grouped by payment method.
+
+SELECT d.name, b.payment_method, SUM(price)
+FROM booking_details b
+JOIN driver d
+ON b.driver_id = d.id
+WHERE CAST(pickup_time AS DATE) >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
+AND CAST(pickup_time AS DATE) <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
+GROUP BY d.name, b.payment_method;
+
+
+-- Get total hours worked per driver over given date range
+
+SELECT d.name, SUM(TO_NUMBER(SUBSTR((end_time - start_time), INSTR((end_time - start_time),' ')+1,2))) as total_hours
+FROM shift s
+JOIN driver d
+ON s.employee_id = d.id
+WHERE CAST(start_time AS DATE) >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
+AND CAST(end_time AS DATE) <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
+GROUP BY d.name;
+
+
+-- Get salary earned per driver over given date range
+
+SELECT name, SUM(salary) as salary
+FROM (
+    SELECT d.name name, d.payment_rate * TO_NUMBER(SUBSTR((end_time - start_time), INSTR((end_time - start_time),' ')+1,2)) as salary
+    FROM shift s
+    JOIN driver d
+    ON s.employee_id = d.id
+    WHERE CAST(start_time AS DATE) >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
+    AND CAST(end_time AS DATE) <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
+    AND d.payment_method = 'hourly'
+    UNION
+    SELECT d.name name, d.payment_rate * b.price / 100 as salary
+    FROM booking_details b
+    JOIN driver d
+    ON b.driver_id = d.id
+    WHERE CAST(pickup_time AS DATE) >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
+    AND CAST(pickup_time AS DATE) <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
+    AND d.payment_method = 'percent'
+) GROUP BY name;
+
