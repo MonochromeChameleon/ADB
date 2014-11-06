@@ -22,7 +22,10 @@ CREATE TABLE driver (
     address NCLOB,
     phone_number VARCHAR2(20),
     start_date DATE NOT NULL,
-    end_date DATE
+    end_date DATE,
+    payment_method VARCHAR(7) NOT NULL,
+    payment_rate int NOT NULL,
+    CONSTRAINT chk_paymt_mthd CHECK (payment_method IN ('percent', 'hourly'))
 );
 
 

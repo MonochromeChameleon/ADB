@@ -3,23 +3,19 @@ INSERT INTO operator (name, address, phone_number) VALUES ('Robert Robertson', '
 INSERT INTO operator (name, address, phone_number) VALUES ('Michael Michaels', 'The bungalow, Lane street, London, SW18 18WS', '+44208999999');
 INSERT INTO operator (name, address, phone_number) VALUES ('Andy Andrews', 'Our house, In the middle of our street', '+39728739992');
 
-INSERT ALL
-    INTO driver (name, address, phone_number) VALUES ('Bilbo Baggins', 'Bag End, Hobbiton, Middle Earth', '+897838792874')
-    INTO driver (name, address, phone_number) VALUES ('Smaug', 'The lonely mountain', '+666666666')
-    INTO driver (name, address, phone_number) VALUES ('Batman', 'Wayne Manor, Near Gotham', 'Red phone')
-    INTO driver (name, address, phone_number) VALUES ('Superman', 'Fortress of solitude, The Arctic', '+1-800-SUPERMAN')
-    INTO driver (name, address, phone_number) VALUES ('Wolverine', 'The Xavier School for Gifted Children', '01234567890')
-    INTO driver (name, address, phone_number) VALUES ('Apocalypse', 'Egypt', '00000000000')
-SELECT 1 FROM dual;
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Bilbo Baggins', 'Bag End, Hobbiton, Middle Earth', '+897838792874', 'percent');
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Smaug', 'The lonely mountain', '+666666666', 'percent');
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Batman', 'Wayne Manor, Near Gotham', 'Red phone', 'percent');
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Superman', 'Fortress of solitude, The Arctic', '+1-800-SUPERMAN', 'hourly');
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Wolverine', 'The Xavier School for Gifted Children', '01234567890', 'hourly');
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Apocalypse', 'Egypt', '00000000000', 'hourly');
 
-INSERT ALL
-    INTO car (registration, registration_date, owner_id) VALUES ('AB14 ABC', TO_DATE('2014-05-01', 'yyyy-mm-dd'), 5)
-    INTO car (registration, registration_date, last_mot, owner_id) VALUES ('RRRRRRRR', TO_DATE('2001-01-01', 'yyyy-mm-dd'), TO_DATE('2014-01-01', 'yyyy-mm-dd'), 6)
-    INTO car (registration, registration_date, owner_id) VALUES ('BAT 1', null, 7)
-    INTO car (registration, registration_date, owner_id) VALUES ('SUPES', null, 8)
-    INTO car (registration, registration_date, last_mot, car_status, owner_id) VALUES   ('X12 XXX', TO_DATE('2012-04-06', 'yyyy-mm-dd'), TO_DATE('2014-03-31', 'yyyy-mm-dd'), 'awaiting repair', 9)
-    INTO car (registration, registration_date, last_mot, owner_id) VALUES ('NS 4BANR', TO_DATE('1000-01-01', 'yyyy-mm-dd'), TO_DATE('2014-01-01', 'yyyy-mm-dd'), 10)
-SELECT 1 FROM dual;
+INSERT INTO car (registration, registration_date, owner_id) VALUES ('AB14 ABC', TO_DATE('2014-05-01', 'yyyy-mm-dd'), 5);
+INSERT INTO car (registration, registration_date, last_mot, owner_id) VALUES ('RRRRRRRR', TO_DATE('2001-01-01', 'yyyy-mm-dd'), TO_DATE('2014-01-01', 'yyyy-mm-dd'), 6);
+INSERT INTO car (registration, registration_date, owner_id) VALUES ('BAT 1', null, 7);
+INSERT INTO car (registration, registration_date, owner_id) VALUES ('SUPES', null, 8);
+INSERT INTO car (registration, registration_date, last_mot, car_status, owner_id) VALUES ('X12 XXX', TO_DATE('2012-04-06', 'yyyy-mm-dd'), TO_DATE('2014-03-31', 'yyyy-mm-dd'), 'awaiting repair', 9);
+INSERT INTO car (registration, registration_date, last_mot, owner_id) VALUES ('NS 4BANR', TO_DATE('1000-01-01', 'yyyy-mm-dd'), TO_DATE('2014-01-01', 'yyyy-mm-dd'), 10);
 
 INSERT INTO shift (employee_id, start_time, end_time) VALUES (1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + INTERVAL '8' HOUR);
 INSERT INTO shift (employee_id, start_time, end_time) VALUES (2, CURRENT_TIMESTAMP + INTERVAL '4' HOUR, CURRENT_TIMESTAMP + INTERVAL '12' HOUR);
