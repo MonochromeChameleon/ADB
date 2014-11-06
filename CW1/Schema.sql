@@ -154,10 +154,16 @@ CREATE TABLE shift (
 -- salaries of operators, lighting, heating etc of the taxi office). Drivers can
 -- be employed by the Company either on a fixed-fee or percentage-of-receipts
 -- basis.
+
+-- Implementation: Fixed fee/percentage rates are handled on the drivers table
+-- Payments to or incurred by a driver are recorded here and then aggregated
+-- in the revenue query to determine the net balance over any date range.
 CREATE TABLE payment (
     driver_id int NOT NULL,
     amount int NOT NULL, -- assume pence again to avoid floating-point maths
     notes NCLOB,
-    payment_date DATE NOT NULL
+    direction VARCHAR(17),
+    payment_date DATE NOT NULL,
+    CONSTRAINT chk_direction CHECK (direction IN ('payment to driver', 'paid by driver'))
 );
 

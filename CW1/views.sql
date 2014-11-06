@@ -41,3 +41,21 @@ ON s.employee_id = o.id
 WHERE start_time <= CURRENT_TIMESTAMP
 AND end_time > CURRENT_TIMESTAMP;
 
+
+-- Driver salary view
+
+CREATE VIEW driver_salaries AS
+SELECT id, name, day, SUM(salary) as salary
+FROM (
+    SELECT d.id id, d.name name, CAST(start_time AS DATE) day, d.payment_rate * TO_NUMBER(SUBSTR((end_time - start_time), INSTR((end_time - start_time),' ')+1,2)) as salary
+    FROM driver d
+    LEFT JOIN shift s
+    ON s.employee_id = d.id
+    AND d.payment_method = 'hourly'
+    UNION
+    SELECT d.id id, d.name name, CAST(pickup_time AS DATE) day, d.payment_rate * b.price / 100 as salary
+    FROM driver d
+    LEFT JOIN booking_details b
+    ON b.driver_id = d.id
+    AND d.payment_method = 'percent'
+) GROUP BY id, name, day;

@@ -83,22 +83,42 @@ GROUP BY d.name;
 
 -- Get salary earned per driver over given date range
 
-SELECT name, SUM(salary) as salary
-FROM (
-    SELECT d.name name, d.payment_rate * TO_NUMBER(SUBSTR((end_time - start_time), INSTR((end_time - start_time),' ')+1,2)) as salary
-    FROM shift s
-    JOIN driver d
-    ON s.employee_id = d.id
-    WHERE CAST(start_time AS DATE) >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
-    AND CAST(end_time AS DATE) <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
-    AND d.payment_method = 'hourly'
-    UNION
-    SELECT d.name name, d.payment_rate * b.price / 100 as salary
-    FROM booking_details b
-    JOIN driver d
-    ON b.driver_id = d.id
+SELECT name, SUM(salary) AS salary
+FROM driver_salaries 
+WHERE day >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
+AND day <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
+GROUP BY name;
+
+
+-- Get net money owed over date range per driver
+
+SELECT d.name, COALESCE(salary, 0) - COALESCE(payments, 0) - COALESCE(cash_takings, 0) net_owed
+FROM 
+    driver d
+LEFT JOIN
+    (SELECT id driver_id, name, SUM(salary) AS salary
+    FROM driver_salaries
+    WHERE day >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
+    AND day <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
+    GROUP BY id, name) sals
+ON d.id = sals.driver_id
+LEFT JOIN
+    (SELECT driver_id, SUM(
+        CASE direction
+        WHEN 'payment to driver' THEN amount
+        ELSE (- amount)
+        END
+    ) as payments
+    FROM payment
+    WHERE payment_date >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
+    AND payment_date <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
+    GROUP BY driver_id) pmts
+ON d.id = pmts.driver_id
+LEFT JOIN
+    (SELECT driver_id, SUM(price) AS cash_takings
+    FROM booking_details
     WHERE CAST(pickup_time AS DATE) >= TO_DATE('2014-01-01', 'yyyy-mm-dd')
     AND CAST(pickup_time AS DATE) <= TO_DATE('2020-01-01', 'yyyy-mm-dd')
-    AND d.payment_method = 'percent'
-) GROUP BY name;
-
+    AND payment_method = 'cash'
+    GROUP BY driver_id) cash
+ON d.id = cash.driver_id;
