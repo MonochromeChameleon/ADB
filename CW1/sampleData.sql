@@ -3,12 +3,12 @@ INSERT INTO operator (name, address, phone_number) VALUES ('Robert Robertson', '
 INSERT INTO operator (name, address, phone_number) VALUES ('Michael Michaels', 'The bungalow, Lane street, London, SW18 18WS', '+44208999999');
 INSERT INTO operator (name, address, phone_number) VALUES ('Andy Andrews', 'Our house, In the middle of our street', '+39728739992');
 
-INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Bilbo Baggins', 'Bag End, Hobbiton, Middle Earth', '+897838792874', 'percent');
-INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Smaug', 'The lonely mountain', '+666666666', 'percent');
-INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Batman', 'Wayne Manor, Near Gotham', 'Red phone', 'percent');
-INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Superman', 'Fortress of solitude, The Arctic', '+1-800-SUPERMAN', 'hourly');
-INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Wolverine', 'The Xavier School for Gifted Children', '01234567890', 'hourly');
-INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Apocalypse', 'Egypt', '00000000000', 'hourly');
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Bilbo Baggins', 'Bag End, Hobbiton, Middle Earth', '+897838792874', 'percent', 15);
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Smaug', 'The lonely mountain', '+666666666', 'percent', 12);
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Batman', 'Wayne Manor, Near Gotham', 'Red phone', 'percent', 20);
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Superman', 'Fortress of solitude, The Arctic', '+1-800-SUPERMAN', 'hourly', 750);
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Wolverine', 'The Xavier School for Gifted Children', '01234567890', 'hourly', 700);
+INSERT INTO driver (name, address, phone_number, payment_method, payment_rate) VALUES ('Apocalypse', 'Egypt', '00000000000', 'hourly', 900);
 
 INSERT INTO car (registration, registration_date, owner_id) VALUES ('AB14 ABC', TO_DATE('2014-05-01', 'yyyy-mm-dd'), 5);
 INSERT INTO car (registration, registration_date, last_mot, owner_id) VALUES ('RRRRRRRR', TO_DATE('2001-01-01', 'yyyy-mm-dd'), TO_DATE('2014-01-01', 'yyyy-mm-dd'), 6);
