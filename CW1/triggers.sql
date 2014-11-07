@@ -196,7 +196,7 @@ DECLARE
     invalid_employee EXCEPTION;
 BEGIN
     -- Check that the employee_id on the shift that we are creating corresponds
-    -- to an employee whose start_date and end_date overlaps with the shit.
+    -- to an employee whose start_date and end_date overlaps with the shift.
     SELECT id
     INTO id_check
     -- Assume that we are creating shifts in the future, so we can use our
@@ -240,7 +240,7 @@ END;
 /
 
 
--- When assigning a driver to a booking, we need to check that that driver is
+-- When assigning a driver to a booking, we need to check that driver is
 -- on shift at the pickup time
 CREATE OR REPLACE TRIGGER trg_booking_driver_shift
 BEFORE INSERT OR UPDATE ON booking_details
@@ -253,7 +253,6 @@ BEGIN
     IF (:new.driver_id IS NOT NULL) THEN
         -- Find the shift for that driver whose start time is before the pickup
         -- time, and whose end time is after the pickup time.
-        -- and after the pickup time
         SELECT start_time
         INTO shift_time_check
         FROM shift
