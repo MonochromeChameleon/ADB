@@ -1,4 +1,4 @@
-define(["lodash", "loglevel"], function (_, log) {
+define(["lodash"], function (_) {
     "use strict";
 
     function dbWrapper(database, name) {
@@ -153,7 +153,7 @@ define(["lodash", "loglevel"], function (_, log) {
         };
 
         req.onerror = function (e) {
-            log.error('indexedDB.open: ' + e.target.errorCode);
+            
         };
 
         req.onupgradeneeded = function (e) {
