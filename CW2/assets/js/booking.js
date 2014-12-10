@@ -14,7 +14,7 @@ define(["lodash", "ko"], function (_, ko) {
     
     function formatPickupTime(pickupTime) {
         var tmStr = pickupTime.toString();
-        return tmStr.substr(0, 2) + ':' + tmStr.substr(2, 2);
+        return tmStr.substr(8, 2) + ':' + tmStr.substr(10, 2);
     }
     
     function formatPrice(price) {

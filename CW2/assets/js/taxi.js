@@ -1,7 +1,5 @@
-define(["jquery", "lodash", "ko", "db", "booking", "map"], function ($, _, ko, db, booking, gMap) {
+define(["jquery", "lodash", "ko", "db", "map", "sync"], function ($, _, ko, db, gMap, sync) {
     "use strict";
-    
-    var apiUrl = '/booking';
     
     var taxiVM = {
         currentJob: ko.computed({
@@ -11,28 +9,6 @@ define(["jquery", "lodash", "ko", "db", "booking", "map"], function ($, _, ko, d
             deferEvaluation: true
         }),
         bookings: ko.observableArray(),
-        refresh: function () {
-            console.log('refresh');
-            
-            $.ajax({
-                type: "GET",
-                url: apiUrl,
-                data: { },
-                success: function (results) {
-                    
-                    var bookings = _.map(results, booking);
-                    db.taxi.bookings.addAll(bookings, function (added) {
-                        console.log('Added ' + added.length + ' values');
-                    });
-                },
-                error: function () {
-                    // ignore for now
-                },
-                // Serialize arrays in a format the server understands.
-                dataType: "json",
-                traditional: true
-            });
-        },
         paymentMode: ko.observable(false),
         tip: ko.observable(0.0),
         takePayment: function () {
@@ -54,24 +30,20 @@ define(["jquery", "lodash", "ko", "db", "booking", "map"], function ($, _, ko, d
             };
             
             // Store the payment details locally and reset the UI
-            db.taxi.payments.add(paymentDetails, function () {
+            db.taxi.payments.add(paymentDetails, function (p) {
                 taxiVM.tip(0.0);
                 taxiVM.paymentMode(false);
+                db.taxi.bookings.delete(p.indexId, sync.update);
             });
         }
     };
     
-    // First load
-    taxiVM.refresh();
-    
-    // Try to update every subsequent minute
-    setInterval(taxiVM.refresh, 60000);
-
-    // Load data from the database into our array of active bookings
-    db.taxi.bookings.all(taxiVM.bookings);
+    sync(taxiVM.bookings);
     
     taxiVM.currentJob.subscribe(function (theJob) {
-        gMap(theJob.postCode);
+        if (theJob) {
+            gMap(theJob.postCode);
+        }
     });
     
     return {

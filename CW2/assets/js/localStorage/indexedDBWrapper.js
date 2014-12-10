@@ -82,6 +82,13 @@ define(["lodash"], function (_) {
                     }
                 };
             }
+            
+            function del(key, callback) {
+                var req = database.transaction(storename, "readwrite").objectStore(storename).delete(key);
+                req.onsuccess = function (e) {
+                    callback();
+                };
+            }
 
             function get(key, callback) {
                 var req = database.transaction(storename).objectStore(storename).get(key);
@@ -128,6 +135,7 @@ define(["lodash"], function (_) {
                 add: add,
                 addAll: addAll,
                 all: all,
+                delete: del,
                 get: get,
                 getAll: function (keys, callback, notFoundCallback) {
                     var tx = database.transaction(storename).objectStore(storename);

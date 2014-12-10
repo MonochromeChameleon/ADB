@@ -34,7 +34,8 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
+  'POST /booking/:id/paid': 'BookingController.paid'
 
   /***************************************************************************
   *                                                                          *

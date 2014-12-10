@@ -33,6 +33,14 @@ define(["lodash"], function (_) {
                     });
                 });
             }
+            
+            function del(key, callback) {
+                database.transaction(function (tx) {
+                    tx.executeSql('DELETE FROM ' + table.name + ' WHERE pk = ?', [key], function (tx) {
+                        callback()
+                    });
+                });
+            }
 
             function get(key, callback) {
                 database.transaction(function (tx) {
@@ -91,6 +99,7 @@ define(["lodash"], function (_) {
                 add: add,
                 addAll: addAll,
                 all: all,
+                delete: del,
                 get: get,
                 getAll: function (keys, callback, notFoundCallback) {
                     getAll([], keys, callback, notFoundCallback);
