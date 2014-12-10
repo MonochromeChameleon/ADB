@@ -94,7 +94,7 @@ body {
 .container {
     width:80%;
     max-width:1200px;
-    margin: 25px auto;
+    margin: 22px auto;
     padding: 10px;
     background-color: #fff;
 }
@@ -293,6 +293,7 @@ a, a:hover, a:active, a:visited {
 .button.green {
     background-color: green;
     float: right;
+    margin-right: 0;
 }
 
 .button.blue {
@@ -317,5 +318,9 @@ input {
     padding: 5px;
     margin-left: 5px;
     text-align: right;
-    max-width: 100px;
+    max-width: 65px;
+}
+
+h3 {
+    text-align: center;
 }

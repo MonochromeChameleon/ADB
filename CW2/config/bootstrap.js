@@ -14,9 +14,8 @@ function fakeTimestamp(time) {
     var year = today.getFullYear();
     var month = '0' + (today.getMonth() + 1);
     var day = '0' + today.getDate();
-    var time24h = '0000' + time;
     
-    return year + month.substr(month.length - 2) + day.substr(day.length - 2) + time24h.substr(time24h.length - 4);
+    return year + month.substr(month.length - 2) + day.substr(day.length - 2) + time;
 }
 
 module.exports.bootstrap = function(cb) {
@@ -27,7 +26,7 @@ module.exports.bootstrap = function(cb) {
             clientName: 'Rick',
             clientPhoneNumber: '07654321987',
             pickupLocation: "55 Baker Street",
-            pickupTime: fakeTimestamp(1315),
+            pickupTime: fakeTimestamp('1315'),
             price: 3100,
             postCode: 'W1U 8EW'
         },
@@ -36,7 +35,7 @@ module.exports.bootstrap = function(cb) {
             clientName: 'Carl',
             clientPhoneNumber: '07873642985',
             pickupLocation: "53 Highgate Road",
-            pickupTime: fakeTimestamp(1330),
+            pickupTime: fakeTimestamp('1330'),
             price: 600,
             postCode: 'NW5 1TL'
         },
@@ -45,7 +44,7 @@ module.exports.bootstrap = function(cb) {
             clientName: "Glenn",
             clientPhoneNumber: "07846899193",
             pickupLocation: "Queen Mary, University of London",
-            pickupTime: fakeTimestamp(2030),
+            pickupTime: fakeTimestamp('2030'),
             price: 500,
             postCode: 'E1 4NS'
         },
@@ -54,7 +53,7 @@ module.exports.bootstrap = function(cb) {
             clientName: "Maggie",
             clientPhoneNumber: "07690478913",
             pickupLocation: "47 Frith Street",
-            pickupTime: fakeTimestamp(1200),
+            pickupTime: fakeTimestamp('1200'),
             price: 2500,
             postCode: "W1D 4HT"
         },
@@ -63,7 +62,7 @@ module.exports.bootstrap = function(cb) {
             clientName: "Andrea",
             clientPhoneNumber: "07697086110",
             pickupLocation: "5 Air Street",
-            pickupTime: fakeTimestamp(0600),
+            pickupTime: fakeTimestamp('0600'),
             price: 3000,
             postCode: "W1J 0AD"
         },
@@ -72,7 +71,7 @@ module.exports.bootstrap = function(cb) {
             clientName: "Eugene",
             clientPhoneNumber: "07293609269",
             pickupLocation: "Science Museum",
-            pickupTime: fakeTimestamp(2100),
+            pickupTime: fakeTimestamp('2100'),
             price: 2200,
             postCode: "SW7 2DD"
         },
@@ -81,7 +80,7 @@ module.exports.bootstrap = function(cb) {
             clientName: "Michonne",
             clientPhoneNumber: "07822667085",
             pickupLocation: "36 Baker Street",
-            pickupTime: fakeTimestamp(2030),
+            pickupTime: fakeTimestamp('2030'),
             price: 1850,
             postCode: "W1U 3EU"
         },
@@ -90,7 +89,7 @@ module.exports.bootstrap = function(cb) {
             clientName: "Abraham",
             clientPhoneNumber: "07257131056",
             pickupLocation: "Shoreditch House",
-            pickupTime: fakeTimestamp(1230),
+            pickupTime: fakeTimestamp('1230'),
             price: 1100,
             postCode: "E1 6AW"
         }
