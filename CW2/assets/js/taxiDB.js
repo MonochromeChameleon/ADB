@@ -4,6 +4,10 @@ define(["localStorage/db"], function (db) {
         {
             name: 'bookings',
             primaryKey: 'indexId'
+        },
+        {
+            name: 'payments',
+            primaryKey: 'indexId'
         }
     ];
 

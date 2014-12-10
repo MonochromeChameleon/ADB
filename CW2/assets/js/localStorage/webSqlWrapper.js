@@ -24,7 +24,7 @@ define(["lodash"], function (_) {
             
             function all(callback) {
                 database.transaction(function (tx) {
-                    tx.executeSql('SELECT * FROM ' + table.name, [], function (tx, sqlResult) {
+                    tx.executeSql('SELECT * FROM ' + table.name + ' ORDER BY pk ASC', [], function (tx, sqlResult) {
                         var results = [];
                         for (var ix = 0; ix < sqlResult.rows.length; ix += 1) { // We can't use a smart iterator here because it's not an array
                             results.push(JSON.parse(sqlResult.rows.item(ix).value));
