@@ -37,17 +37,6 @@ module.exports = {
       postCode: {
           type: 'string',
           required: true
-      },
-      
-      getIndexId: function () {
-          // Assume pickupTime is formatted as yyyymmddhhmm
-          var paddedId = '00000000' + this.id;
-          
-          // indexId is the time, plus the provided booking id, padded to 8 digits  - i.e. we have an identifier which 
-          // is strictly ascending with time, regardless of the time at which individual bookings were made (id is 
-          // an autoincrementing field on the database), which will only start to overflow after 100 million db entries.
-          // At a rate of 2500 bookings per day, this would survive 100 years, which is probably a safe limit.
-          return this.pickupTime + ' ' + paddedId.substr(paddedId.length - 8);
       }
   }
 };

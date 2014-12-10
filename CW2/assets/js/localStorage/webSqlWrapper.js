@@ -21,6 +21,18 @@ define(["lodash"], function (_) {
                     callback(data);
                 });
             }
+            
+            function all(callback) {
+                database.transaction(function (tx) {
+                    tx.executeSql('SELECT * FROM ' + table.name, [], function (tx, sqlResult) {
+                        var results = [];
+                        for (var ix = 0; ix < sqlResult.rows.length; ix += 1) { // We can't use a smart iterator here because it's not an array
+                            results.push(JSON.parse(sqlResult.rows.item(ix).value));
+                        }
+                        callback(results);
+                    });
+                });
+            }
 
             function get(key, callback) {
                 database.transaction(function (tx) {
@@ -78,6 +90,7 @@ define(["lodash"], function (_) {
             return {
                 add: add,
                 addAll: addAll,
+                all: all,
                 get: get,
                 getAll: function (keys, callback, notFoundCallback) {
                     getAll([], keys, callback, notFoundCallback);
@@ -121,6 +134,7 @@ define(["lodash"], function (_) {
         }
         var tablesCopy = Array.prototype.slice.call(tables, 0);
         var table = tablesCopy.shift();
+        // Default our schema to a basic key/value one
         tx.executeSql('CREATE TABLE IF NOT EXISTS ' + table.name + '( pk VARCHAR (40) NOT NULL PRIMARY KEY, value TEXT)', [], function () {
             createTables(tablesCopy, tx, callback);
         });

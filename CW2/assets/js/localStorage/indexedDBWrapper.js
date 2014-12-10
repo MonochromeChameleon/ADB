@@ -68,6 +68,20 @@ define(["lodash"], function (_) {
                 });
                 executeAddQueue();
             }
+            
+            function all(callback) {
+                var results = [];
+                var store = database.transaction(storename).objectStore(storename);
+                store.openCursor().onsuccess = function (e) {
+                var cursor = e.target.result;
+                    if (cursor) {
+                        results.push(cursor.value);
+                        cursor.continue();
+                    } else {
+                        callback(results);
+                    }
+                };
+            }
 
             function get(key, callback) {
                 var req = database.transaction(storename).objectStore(storename).get(key);
@@ -113,6 +127,7 @@ define(["lodash"], function (_) {
             var osWrapper = {
                 add: add,
                 addAll: addAll,
+                all: all,
                 get: get,
                 getAll: function (keys, callback, notFoundCallback) {
                     var tx = database.transaction(storename).objectStore(storename);

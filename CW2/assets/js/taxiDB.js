@@ -2,8 +2,8 @@ define(["localStorage/db"], function (db) {
 
     var tables = [
         {
-            name: 'jobs',
-            primaryKey: 'a'
+            name: 'bookings',
+            primaryKey: 'indexId'
         }
     ];
 
