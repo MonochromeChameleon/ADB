@@ -34,10 +34,18 @@ define(["lodash"], function (_) {
                 });
             }
             
+            function clear(callback) {
+                database.transaction(function (tx) {
+                    tx.executeSql('DELETE FROM ' + table.name, [], function (tx) {
+                        callback();
+                    });
+                });
+            }
+            
             function del(key, callback) {
                 database.transaction(function (tx) {
                     tx.executeSql('DELETE FROM ' + table.name + ' WHERE pk = ?', [key], function (tx) {
-                        callback()
+                        callback();
                     });
                 });
             }
@@ -99,6 +107,7 @@ define(["lodash"], function (_) {
                 add: add,
                 addAll: addAll,
                 all: all,
+                clear: clear,
                 delete: del,
                 get: get,
                 getAll: function (keys, callback, notFoundCallback) {

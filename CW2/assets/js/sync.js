@@ -5,13 +5,21 @@ define(["jquery", "lodash", "db", "booking"], function ($, _, db, booking) {
     var apiUrl = '/booking';
     
     function refreshBookings() {
+        // Bail out early if we're not online
+        if (!navigator.onLine) {
+            return;
+        }
+        
         $.ajax({
             type: "GET",
             url: apiUrl,
             data: { },
             success: function (results) {
                 var bookings = _.map(results, booking);
-                db.taxi.bookings.addAll(bookings, sync.update);
+                // Flush storage and repopulate with the new values
+                db.taxi.bookings.clear(function () {
+                    db.taxi.bookings.addAll(bookings, sync.update);                
+                });
             },
             error: function () {
                 // ignore for now
@@ -28,6 +36,11 @@ define(["jquery", "lodash", "db", "booking"], function ($, _, db, booking) {
         // This is something of an implementation kludge to allow for our stubbed out API
         if (!payments.length) {
             refreshBookings();
+            return;
+        }
+        
+        // Bail out early if we're not online
+        if (!navigator.onLine) {
             return;
         }
         
