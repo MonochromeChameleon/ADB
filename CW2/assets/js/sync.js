@@ -22,7 +22,7 @@ define(["jquery", "lodash", "db", "booking"], function ($, _, db, booking) {
                 });
             },
             error: function () {
-                // ignore for now
+                // ignore for now - no change is made to the database unless the server has returned an OK response
             },
             // Serialize arrays in a format the server understands.
             dataType: "json",
@@ -60,7 +60,7 @@ define(["jquery", "lodash", "db", "booking"], function ($, _, db, booking) {
                 });
             },
             error: function () {
-                // ignore for now
+                // ignore for now - no change is made to the database unless the server has returned an OK response
             },
             traditional: true
         });
