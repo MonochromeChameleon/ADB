@@ -63,56 +63,13 @@ define(["lodash"], function (_) {
                 });
             }
 
-            function getAll(results, keys, callback, notFoundCallback) {
-                if (!keys.length) {
-                    // If we're done, pass the results back to the calling function.
-                    callback(results);
-                    return;
-                }
-
-                var keysCopy = Array.prototype.slice.call(keys, 0);
-
-                // We have to batch the request as it slows down markedly for too many items being retrieved
-                var keySlice = _.take(keysCopy, 500);
-                var keysLeft = _.drop(keysCopy, 500);
-
-                var foundKeys = [];
-                var qs = [];
-                _.times(keySlice.length, function () {
-                    qs.push('?');
-                });
-
-                database.transaction(function (tx) {
-                    var query = 'SELECT * FROM ' + table.name + ' WHERE pk IN (' + qs.join(',') + ')';
-                    tx.executeSql(query, keySlice, function (tx, sqlResult) {
-                        for (var ix = 0; ix < sqlResult.rows.length; ix += 1) { // We can't use a smart iterator here because it's not an array
-                            results.push(JSON.parse(sqlResult.rows.item(ix).value));
-                            foundKeys.push(sqlResult.rows.item(ix).pk);
-                        }
-
-                        if (notFoundCallback) {
-                            var missingResults = _.difference(keys, foundKeys);
-                            _.each(missingResults, function (key) {
-                                notFoundCallback(key);
-                            });
-                        }
-
-                        // Process the next batch
-                        getAll(results, keysLeft, callback, notFoundCallback);
-                    });
-                });
-            }
-
             return {
                 add: add,
                 addAll: addAll,
                 all: all,
                 clear: clear,
                 delete: del,
-                get: get,
-                getAll: function (keys, callback, notFoundCallback) {
-                    getAll([], keys, callback, notFoundCallback);
-                }
+                get: get
             };
         }
 

@@ -14,7 +14,7 @@ define(["lodash",
         };
 
         // Define cache capture methods for all exposed methods on our inner wrapper classes
-        _.each(["add", "addAll", "all", "clear", "delete", "get", "getAll"], function (methodName) {
+        _.each(["add", "addAll", "all", "clear", "delete", "get"], function (methodName) {
             ret[methodName] = function () {
                 calls.push({
                     method: methodName,

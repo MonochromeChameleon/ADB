@@ -108,47 +108,13 @@ define(["lodash"], function (_) {
                 };
             }
 
-            function getAll(results, tx, keys, callback, notFoundCallback) {
-                if (!keys.length) {
-                    callback(results);
-                    return;
-                }
-
-                var keysCopy = Array.prototype.slice.call(keys, 0);
-
-                var key = keysCopy.shift();
-                var req = tx.get(key);
-
-                function onResult(result) {
-                    if (result) {
-                        results.push(result);
-                    }
-                    getAll(results,tx, keysCopy, callback, notFoundCallback);
-                }
-
-                req.onsuccess = function () {
-                    if (!req.result && notFoundCallback) {
-                        notFoundCallback(key);
-                    }
-                    onResult(req.result);
-                };
-
-                req.onerror = function () {
-                    callback(results);
-                };
-            }
-
             var osWrapper = {
                 add: add,
                 addAll: addAll,
                 all: all,
                 clear: clear,
                 delete: del,
-                get: get,
-                getAll: function (keys, callback, notFoundCallback) {
-                    var tx = database.transaction(storename).objectStore(storename);
-                    getAll([], tx, keys, callback, notFoundCallback);
-                }
+                get: get
             };
 
             return osWrapper;
