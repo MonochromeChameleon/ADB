@@ -45,12 +45,16 @@ define(["jquery", "lodash", "db", "booking"], function ($, _, db, booking) {
         }
         
         var pmnt = payments.shift();
-        var id = pmnt.indexId.substr(pmnt.indexId.length - 8);
+        var id = parseInt(pmnt.indexId.substr(pmnt.indexId.length - 8), 10);
 
         $.ajax({
             type: "POST",
             url: apiUrl + '/' + id + '/paid',
-            data: { },
+            data: {
+                id: id,
+                price: pmnt.price,
+                tip: pmnt.tip
+            },
             success: function (results) {
                 // If we have successfully synced with the database, we can delete the payment from our local 
                 // cache
